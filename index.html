@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>包浆meme生成器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-logo">P</div>
+    <div class="header-title">包浆meme生成器</div>
+    <div class="header-tag">meme-processor v1.0</div>
+  </div>
+
+  <!-- Main layout -->
+  <div class="main">
+    <!-- Preview area -->
+    <div class="preview-area">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <div class="canvas-inner" id="previewContainer">
+          <!-- Empty state (shown when no image) -->
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">📷</div>
+            <div class="empty-text">上传图片开始包浆</div>
+            <div class="empty-hint">点击或拖拽上传</div>
+            <input type="file" id="fileInput" accept="image/*" hidden>
+          </div>
+          <!-- Preview canvas (hidden until image loaded) -->
+          <canvas id="previewCanvas" style="display:none;"></canvas>
+        </div>
+      </div>
+      <div class="action-bar">
+        <button class="btn btn-primary" id="downloadBtn">保存图片</button>
+        <button class="btn btn-ghost" id="resetBtn">上传新图</button>
+      </div>
+    </div>
+
+    <!-- Control panel -->
+    <div class="controls">
+      <!-- Layout direction -->
+      <div class="control-section">
+        <div class="control-label">Layout</div>
+        <div class="toggle-group">
+          <button class="toggle-btn active" data-layout="top">上文下图</button>
+          <button class="toggle-btn" data-layout="bottom">下文上图</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Text input -->
+      <div class="control-section">
+        <div class="control-label">Text</div>
+        <textarea class="text-input" id="textInput" placeholder="输入你的梗图文案..." rows="3"></textarea>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Pixelation intensity -->
+      <div class="control-section">
+        <div class="control-label">Pixelate</div>
+        <div class="slider-row">
+          <input type="range" id="pixelateSlider" min="1" max="30" value="8">
+          <span class="slider-value" id="pixelateValue">8</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Crop -->
+      <div class="control-section">
+        <div class="control-label">Crop</div>
+        <div class="crop-options">
+          <button class="crop-btn active" data-ratio="free">自由</button>
+          <button class="crop-btn" data-ratio="1:1">1:1</button>
+          <button class="crop-btn" data-ratio="4:3">4:3</button>
+          <button class="crop-btn" data-ratio="16:9">16:9</button>
+          <button class="crop-btn" data-ratio="3:4">3:4</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crop overlay (hidden by default) -->
+  <div class="crop-overlay" id="cropOverlay" style="display:none;">
+    <div class="crop-toolbar">
+      <button class="btn btn-primary" id="cropConfirmBtn">确认裁剪</button>
+      <button class="btn btn-ghost" id="cropCancelBtn">取消</button>
+    </div>
+    <div class="crop-viewport" id="cropViewport">
+      <canvas id="cropCanvas"></canvas>
+      <div class="crop-selection" id="cropSelection">
+        <div class="crop-handle crop-handle-tl" data-handle="tl"></div>
+        <div class="crop-handle crop-handle-tr" data-handle="tr"></div>
+        <div class="crop-handle crop-handle-bl" data-handle="bl"></div>
+        <div class="crop-handle crop-handle-br" data-handle="br"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
